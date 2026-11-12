@@ -1,0 +1,10 @@
+{
+  "name": "Sharon Tea & Coffee Order",
+  "short_name": "Sharon Order",
+  "description": "Contactless QR beverage and snack ordering for Sharon Tea & Coffee outlets",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF7F2",
+  "theme_color": "#1C4C34",
+  "orientation": "portrait"
+}

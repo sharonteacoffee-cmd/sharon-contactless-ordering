@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #241c24;
+  --color-forest: #1c4c34;
+  --color-leaf: #34a43c;
+  --color-chai: #a44c14;
+  --color-rust: #7c2c0c;
+  --color-amber: #fc9c34;
+  --color-burgundy: #541424;
+  --color-grey: #d4d4d4;
+  --color-cream: #faf7f2;
+  --color-border: #e8e3d9;
+  --color-muted: #6e6a67;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-cream);
+  color: var(--color-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+::selection {
+  background-color: var(--color-burgundy);
+  color: #ffffff;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.kds-pulse-ring {
+  animation: kdsPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes kdsPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(252, 156, 52, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(252, 156, 52, 0);
+  }
+}
+
+.btn-export-excel {
+  background-color: #047857 !important;
+  border-color: #047857 !important;
+  color: #ffffff !important;
+}
+.btn-export-excel:hover {
+  background-color: #065f46 !important;
+  border-color: #065f46 !important;
+}
+
+.btn-export-pdf {
+  background-color: #be123c !important;
+  border-color: #be123c !important;
+  color: #ffffff !important;
+}
+.btn-export-pdf:hover {
+  background-color: #9f1239 !important;
+  border-color: #9f1239 !important;
+}
+
+.btn-export-csv {
+  background-color: #292524 !important;
+  border-color: #292524 !important;
+  color: #ffffff !important;
+}
+.btn-export-csv:hover {
+  background-color: #0c0a09 !important;
+  border-color: #0c0a09 !important;
+}

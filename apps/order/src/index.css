@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #241C24;
+  --color-forest: #1C4C34;
+  --color-leaf: #34A43C;
+  --color-chai: #A44C14;
+  --color-rust: #7C2C0C;
+  --color-amber: #FC9C34;
+  --color-burgundy: #541424;
+  --color-grey: #D4D4D4;
+  --color-cream: #FAF7F2;
+  --color-border: #E8E3D9;
+  --color-muted: #6E6A67;
+}
+
+@layer base {
+  html,
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--color-cream);
+    color: var(--color-primary);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  h1,
+  h2,
+  .font-display {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+}
+
+@layer components {
+  .glass-light {
+    @apply bg-white/80 backdrop-blur-xl border border-brand-border/80 shadow-soft;
+  }
+
+  .glass-dark {
+    @apply bg-brand-black/90 backdrop-blur-2xl border border-white/15 text-white shadow-floating;
+  }
+
+  .glass-sheet {
+    @apply bg-brand-cream/95 backdrop-blur-2xl border-t border-brand-border shadow-elevated rounded-t-[32px];
+  }
+
+  .btn-forest-primary {
+    @apply bg-brand-forest text-white hover:bg-brand-forestHover active:bg-brand-forestActive shadow-primaryBtn transition-all;
+  }
+
+  .btn-amber-cta {
+    @apply bg-brand-amber text-brand-black font-bold hover:bg-brand-amberHover active:scale-[0.99] transition-all;
+  }
+
+  .btn-cream-secondary {
+    @apply bg-[#F5F5F4] hover:bg-[#E7E5E4] border border-brand-border text-[#57534E] transition-colors;
+  }
+
+  .tabular-price {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Hide scrollbars cleanly for horizontal category & upsell carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

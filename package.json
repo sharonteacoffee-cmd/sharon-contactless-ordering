@@ -1,0 +1,21 @@
+{
+  "name": "sharon-contactless-ordering",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sharon Tea & Coffee - Decoupled Contactless Multi-Outlet QR Ordering Platform",
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "dev": "pnpm -r --parallel --if-present dev",
+    "build": "pnpm -r --if-present build",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "lint": "pnpm -r --if-present lint",
+    "clean": "pnpm -r --if-present clean"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}
