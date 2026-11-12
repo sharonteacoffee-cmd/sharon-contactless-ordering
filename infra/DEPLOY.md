@@ -34,9 +34,9 @@
    - `CORS_ALLOWED_ORIGINS=https://order.sharonteastall.com,https://dashboard.sharonteastall.com`
    - `MAIN_WEBSITE_API_URL=https://api.sharonteastall.com/api/v1/Product/GetPublicProducts`
    - `PAYMENT_ACTIVE_PROVIDER=DEMO_UPI_INTENT` (switch to `RAZORPAY` or `CASHFREE` + webhook secrets when ready)
-2. Install & build monorepo workspaces:
+2. Install & build backend + shared workspaces ONLY (never install or run frontend apps on EC2 — frontends are deployed to S3 + CloudFront):
    ```bash
-   pnpm install --frozen-lockfile
+   pnpm --filter @sharon/contactless-api... install --frozen-lockfile
    pnpm --filter @sharon/shared build
    pnpm --filter @sharon/contactless-api build
    ```
