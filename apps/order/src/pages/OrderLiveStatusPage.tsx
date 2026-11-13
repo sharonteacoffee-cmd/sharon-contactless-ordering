@@ -110,24 +110,26 @@ export function OrderLiveStatusPage() {
   return (
     <CustomerLayout maxWidthClass="max-w-xl">
       <div className="px-3 sm:px-4 py-5 space-y-4 flex-1">
-        {/* Top Navigation & Status Bar */}
-        <div className="flex items-center justify-between gap-2 px-0.5">
-          <Link
-            to={order ? `/order/${order.outletSlug}` : '/'}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-brand-border text-xs font-bold text-brand-forest hover:bg-brand-cream shadow-soft transition-all active:scale-95"
-          >
-            <ArrowLeft className="w-4 h-4 text-brand-forest" />
-            <SharonLogo size="xs" variant="badge" className="rounded-full shadow-xs" />
-            <span>Back to Menu</span>
-          </Link>
+        {/* Sticky Top Navigation & Status Bar */}
+        <header className="sticky top-0 z-30 -mx-3 sm:-mx-4 px-3 sm:px-4 pt-2 pb-2 backdrop-blur-md bg-brand-cream/85">
+          <div className="flex items-center justify-between gap-2">
+            <Link
+              to={order ? `/order/${order.outletSlug}` : '/'}
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-brand-border text-xs font-bold text-brand-forest hover:bg-brand-cream shadow-soft transition-all active:scale-95"
+            >
+              <ArrowLeft className="w-4 h-4 text-brand-forest" />
+              <SharonLogo size="xs" variant="badge" className="rounded-full shadow-xs" />
+              <span>Back to Menu</span>
+            </Link>
 
-          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 border border-brand-border text-[11px] font-semibold text-brand-muted shadow-soft">
-            <Radio
-              className={`w-3 h-3 ${isConnected ? 'text-brand-leaf animate-pulse' : 'text-brand-amber'}`}
-            />
-            <span>{isConnected ? 'Live Updates On' : 'Reconnecting...'}</span>
-          </span>
-        </div>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 border border-brand-border text-[11px] font-semibold text-brand-muted shadow-soft">
+              <Radio
+                className={`w-3 h-3 ${isConnected ? 'text-brand-leaf animate-pulse' : 'text-brand-amber'}`}
+              />
+              <span>{isConnected ? 'Live Updates On' : 'Reconnecting...'}</span>
+            </span>
+          </div>
+        </header>
 
         {isLoading ? (
           <div className="space-y-4">

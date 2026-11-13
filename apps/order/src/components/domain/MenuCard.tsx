@@ -26,15 +26,15 @@ export function MenuCard({
 
   return (
     <article
-      className={`glass-light rounded-2xl sm:rounded-3xl p-2.5 sm:p-3 flex flex-col justify-between transition-all duration-200 ${
+      className={`glass-light rounded-2xl sm:rounded-3xl p-2 sm:p-3 flex flex-col justify-between transition-all duration-200 ${
         isSoldOut
           ? 'opacity-60 grayscale-[65%] cursor-not-allowed'
           : 'hover:shadow-elevated hover:-translate-y-0.5'
       }`}
     >
       <div>
-        {/* Studio Image Frame - Square on mobile for compact layout, 4:5 on tablets+ */}
-        <div className="relative w-full aspect-square sm:aspect-[4/5] rounded-xl sm:rounded-2xl overflow-hidden bg-gradient-to-br from-brand-forest/10 via-brand-cream to-brand-amber/15 mb-2 sm:mb-2.5">
+        {/* Studio Image Frame - Compact 4:3 on mobile for perfect 2-row view, 4:5 on tablets+ */}
+        <div className="relative w-full aspect-[4/3] sm:aspect-[4/5] rounded-xl sm:rounded-2xl overflow-hidden bg-gradient-to-br from-brand-forest/10 via-brand-cream to-brand-amber/15 mb-1.5 sm:mb-2.5">
           {item.imageUrl && !imgError ? (
             <img
               key={item.imageUrl ?? 'no-image'}
@@ -45,16 +45,16 @@ export function MenuCard({
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center text-brand-forest/60 gap-1.5 p-2 bg-brand-cream/80">
-              <SharonLogo size="sm" variant="badge" className="opacity-75" />
-              <span className="text-[10px] sm:text-[11px] font-semibold tracking-wider uppercase text-brand-forest/70">
+            <div className="w-full h-full flex flex-col items-center justify-center text-brand-forest/70 gap-1.5 p-2 bg-gradient-to-br from-brand-forest/5 via-brand-cream to-brand-amber/10">
+              <SharonLogo size="md" variant="badge" className="shadow-xs ring-1 ring-brand-forest/20 rounded-full" />
+              <span className="text-[10px] sm:text-[11px] font-bold tracking-wider uppercase text-brand-forest/80">
                 Sharon Brew
               </span>
             </div>
           )}
 
           {/* Top Veg / Non-Veg indicator + Bestseller Tag */}
-          <div className="absolute top-2 left-2 right-2 flex items-center justify-between gap-1">
+          <div className="absolute top-1.5 left-1.5 right-1.5 flex items-center justify-between gap-1">
             {item.isVegetarian ? (
               <span
                 title="100% Vegetarian"
@@ -74,7 +74,7 @@ export function MenuCard({
             {item.isBestseller && !isSoldOut ? (
               <span className="inline-flex items-center gap-0.5 sm:gap-1 px-1.5 sm:px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold uppercase tracking-wide bg-brand-amber text-brand-black shadow-sm shrink-0">
                 <Flame className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                <span className="truncate max-w-[65px] sm:max-w-none">Bestseller</span>
+                <span className="truncate max-w-[60px] sm:max-w-none">Bestseller</span>
               </span>
             ) : null}
           </div>
@@ -94,22 +94,22 @@ export function MenuCard({
           ) : null}
         </div>
 
-        <h3 className="font-semibold text-xs sm:text-sm md:text-base text-brand-black leading-snug line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem]">
+        <h3 className="font-semibold text-xs sm:text-sm md:text-base text-brand-black leading-snug line-clamp-1 sm:line-clamp-2 min-h-[1.125rem] sm:min-h-[2.5rem]">
           {item.name}
         </h3>
 
         {item.description ? (
-          <p className="mt-0.5 sm:mt-1 text-[11px] sm:text-xs text-brand-muted line-clamp-2 leading-relaxed min-h-[1.75rem] sm:min-h-[2rem]">
+          <p className="mt-0.5 sm:mt-1 text-[10px] sm:text-xs text-brand-muted line-clamp-1 sm:line-clamp-2 leading-relaxed min-h-[1rem] sm:min-h-[2rem]">
             {item.description}
           </p>
         ) : (
-          <div className="min-h-[1.75rem] sm:min-h-[2rem]" />
+          <div className="min-h-[1rem] sm:min-h-[2rem]" />
         )}
       </div>
 
       {/* Price + Forest Green Primary Add CTA */}
-      <div className="mt-2.5 sm:mt-3 pt-2 border-t border-brand-border flex items-center justify-between gap-1 sm:gap-2">
-        <span className="text-sm sm:text-base font-bold text-brand-black tabular-price shrink-0">
+      <div className="mt-2 sm:mt-2.5 pt-1.5 sm:pt-2 border-t border-brand-border flex items-center justify-between gap-1 sm:gap-2">
+        <span className="text-xs sm:text-sm md:text-base font-bold text-brand-black tabular-price shrink-0">
           {formatINR(item.price)}
         </span>
 

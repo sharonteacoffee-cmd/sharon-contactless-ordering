@@ -203,8 +203,8 @@ export function OutletMenuPage() {
   return (
     <CustomerLayout maxWidthClass="max-w-4xl">
       {/* Sticky Glass Top Bar */}
-      <header className="sticky top-0 z-30 px-2.5 sm:px-4 pt-2 sm:pt-3 pb-2">
-        <div className="glass-light rounded-2xl sm:rounded-3xl px-3 sm:px-4 py-2.5 sm:py-3 space-y-2.5 sm:space-y-3">
+      <header className="sticky top-0 z-30 px-2 sm:px-4 pt-1.5 sm:pt-3 pb-1.5 sm:pb-2">
+        <div className="glass-light rounded-2xl sm:rounded-3xl px-2.5 sm:px-4 py-2 sm:py-3 space-y-2 sm:space-y-3">
           <div className="flex items-center justify-between gap-2.5 sm:gap-3">
             <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
               <SharonLogo
@@ -299,13 +299,13 @@ export function OutletMenuPage() {
       </header>
 
       {/* Menu Grid */}
-      <main className="flex-1 px-2.5 sm:px-4 pt-2 sm:pt-3 pb-36 sm:pb-32">
+      <main className="flex-1 px-2 sm:px-4 pt-1.5 sm:pt-3 pb-44 sm:pb-36">
         {outletLoading || menuLoading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 sm:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-4">
             {[1, 2, 3, 4, 5, 6].map((idx) => (
               <div
                 key={idx}
-                className="glass-light rounded-2xl sm:rounded-3xl p-2.5 sm:p-3 h-64 sm:h-72 animate-pulse bg-white/55"
+                className="glass-light rounded-2xl sm:rounded-3xl p-2 sm:p-3 h-52 sm:h-72 animate-pulse bg-white/55"
               />
             ))}
           </div>
@@ -343,7 +343,7 @@ export function OutletMenuPage() {
             }
           />
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 sm:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-4">
             {filteredItems.map((item) => (
               <MenuCard
                 key={item.id}
