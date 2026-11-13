@@ -28,11 +28,68 @@ export class CashfreePaymentStrategy implements PaymentStrategy {
   public async initiatePayment(
     input: PaymentInitiationInput,
   ): Promise<PaymentInitiationResult> {
-    // Adapter stub ready for live Cashfree PG Orders API when CASHFREE_APP_ID/SECRET_KEY are configured
-    return {
-      provider: this.provider,
-      gatewayOrderId: `cf_order_${input.orderBusinessId}`,
-    };
+    const appId = integrationConfig.cashfree.appId;
+    const secretKey = integrationConfig.cashfree.secretKey;
+
+    if (!appId || !secretKey) {
+      return {
+        provider: this.provider,
+        gatewayOrderId: `cf_order_${input.orderBusinessId}`,
+      };
+    }
+
+    try {
+      const apiUrl = 'https://api.cashfree.com/pg/orders';
+      const cleanPhone = (input.customerPhone || '').replace(/\D/g, '');
+      const validPhone = cleanPhone.length === 10 ? cleanPhone : '9999999999';
+
+      const payload = {
+        order_id: input.orderBusinessId,
+        order_amount: Number(input.totalAmount.toFixed(2)),
+        order_currency: 'INR',
+        customer_details: {
+          customer_id: input.customerPhone ? `cust_${validPhone}` : `cust_${input.orderBusinessId}`,
+          customer_phone: validPhone,
+          customer_name: input.customerName || 'Sharon Customer',
+        },
+        order_meta: {
+          return_url: `https://order.sharonteastall.com/order/status/${input.orderBusinessId}?order_id={order_id}`,
+          notify_url: 'https://contactless-api.sharonteastall.com/api/v1/Public/Webhook/PaymentCallback/cashfree',
+        },
+      };
+
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'x-client-id': appId,
+          'x-client-secret': secretKey,
+          'x-api-version': '2023-08-01',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errText = await response.text();
+        console.error('[Cashfree] Order creation error:', response.status, errText);
+        throw new Error(`Cashfree order creation failed with status ${response.status}`);
+      }
+
+      const data = (await response.json()) as {
+        payment_session_id?: string;
+        cf_order_id?: string | number;
+        order_id?: string;
+      };
+
+      return {
+        provider: this.provider,
+        gatewayOrderId: data.payment_session_id || String(data.cf_order_id || input.orderBusinessId),
+        paymentSessionId: data.payment_session_id,
+      };
+    } catch (error) {
+      console.error('[Cashfree] Unexpected error in initiatePayment:', error);
+      throw error;
+    }
   }
 
   public verifyWebhookSignature(

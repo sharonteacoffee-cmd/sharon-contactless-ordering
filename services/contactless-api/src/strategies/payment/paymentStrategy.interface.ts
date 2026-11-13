@@ -14,6 +14,7 @@ export interface PaymentInitiationResult {
   provider: PaymentProvider;
   upiPayload?: UpiPayload;
   gatewayOrderId?: string;
+  paymentSessionId?: string;
 }
 
 export interface ParsedWebhookEvent {

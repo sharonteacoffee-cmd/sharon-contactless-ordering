@@ -28,6 +28,8 @@ export interface CreatePublicOrderResponse {
   paymentStatus: PaymentStatus;
   orderStatus: OrderStatus;
   upiPayload?: UpiPayload;
+  gatewayOrderId?: string;
+  paymentSessionId?: string;
   createdAt: string;
 }
 

@@ -13,7 +13,9 @@ const integrationEnvSchema = z.object({
   RAZORPAY_KEY_SECRET: z.string().optional().default(''),
   RAZORPAY_WEBHOOK_SECRET: z.string().optional().default(''),
   CASHFREE_APP_ID: z.string().optional().default(''),
+  CASHFREE_CLIENT_ID: z.string().optional().default(''),
   CASHFREE_SECRET_KEY: z.string().optional().default(''),
+  CASHFREE_CLIENT_SECRET: z.string().optional().default(''),
   CASHFREE_WEBHOOK_SECRET: z.string().optional().default(''),
 });
 
@@ -22,6 +24,10 @@ if (!parsed.success) {
   console.error('[config:integration] Invalid integration configuration:', parsed.error.flatten().fieldErrors);
   throw new Error('Invalid integration environment configuration');
 }
+
+const resolvedCashfreeAppId = parsed.data.CASHFREE_APP_ID || parsed.data.CASHFREE_CLIENT_ID;
+const resolvedCashfreeSecret = parsed.data.CASHFREE_SECRET_KEY || parsed.data.CASHFREE_CLIENT_SECRET;
+const resolvedCashfreeWebhookSecret = parsed.data.CASHFREE_WEBHOOK_SECRET || resolvedCashfreeSecret;
 
 export const integrationConfig = {
   mainWebsiteApiUrl: parsed.data.MAIN_WEBSITE_API_URL,
@@ -32,8 +38,8 @@ export const integrationConfig = {
     webhookSecret: parsed.data.RAZORPAY_WEBHOOK_SECRET,
   },
   cashfree: {
-    appId: parsed.data.CASHFREE_APP_ID,
-    secretKey: parsed.data.CASHFREE_SECRET_KEY,
-    webhookSecret: parsed.data.CASHFREE_WEBHOOK_SECRET,
+    appId: resolvedCashfreeAppId,
+    secretKey: resolvedCashfreeSecret,
+    webhookSecret: resolvedCashfreeWebhookSecret,
   },
 } as const;

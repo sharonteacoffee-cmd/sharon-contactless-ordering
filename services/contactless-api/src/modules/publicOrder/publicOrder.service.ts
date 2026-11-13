@@ -263,6 +263,7 @@ export async function createPublicOrder(
     orderStatus: 'RECEIVED',
     ...(paymentInit.upiPayload ? { upiPayload: paymentInit.upiPayload } : {}),
     ...(paymentInit.gatewayOrderId ? { gatewayOrderId: paymentInit.gatewayOrderId } : {}),
+    ...(paymentInit.paymentSessionId ? { paymentSessionId: paymentInit.paymentSessionId } : {}),
     createdAt: toUTCISOString(created.createdAt),
   };
 }

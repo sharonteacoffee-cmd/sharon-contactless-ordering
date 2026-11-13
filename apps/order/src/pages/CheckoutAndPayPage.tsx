@@ -29,6 +29,7 @@ import {
   calculateCartItemUnitPrice,
   formatINR,
 } from '@/utils/currency';
+import { launchCashfreeCheckout } from '@/utils/cashfree';
 
 const indianMobileRegex = /^[6-9]\d{9}$/;
 
@@ -176,6 +177,8 @@ export function CheckoutAndPayPage() {
 
       if (response.paymentProvider === 'DEMO_UPI_INTENT' && response.upiPayload) {
         setCreatedOrder(response);
+      } else if (response.paymentProvider === 'CASHFREE' && response.paymentSessionId) {
+        await launchCashfreeCheckout(response.paymentSessionId);
       } else {
         navigate(`/order/status/${response.orderBusinessId}`, { replace: true });
       }
