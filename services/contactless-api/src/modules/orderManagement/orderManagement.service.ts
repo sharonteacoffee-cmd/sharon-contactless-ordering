@@ -107,9 +107,10 @@ async function resolveScopedOutletId(
 export async function getLiveOrders(
   user: AuthenticatedStaffUser,
   outletBusinessId?: string,
+  completedLimit?: number,
 ): Promise<ContactlessOrder[]> {
   const scopedOutletId = await resolveScopedOutletId(user, outletBusinessId);
-  const rows = await findLiveOrders(scopedOutletId);
+  const rows = await findLiveOrders(scopedOutletId, completedLimit);
   return rows.map(toContactlessOrderDto);
 }
 

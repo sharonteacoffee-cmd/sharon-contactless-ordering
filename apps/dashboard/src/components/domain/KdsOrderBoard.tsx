@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import type { ContactlessOrder, OrderStatus } from '@sharon/shared';
 import { KdsOrderColumn } from './KdsOrderColumn';
 
@@ -22,10 +23,20 @@ export function KdsOrderBoard({
   const receivedOrders = orders.filter((o) => o.orderStatus === 'RECEIVED');
   const preparingOrders = orders.filter((o) => o.orderStatus === 'PREPARING');
   const readyOrders = orders.filter((o) => o.orderStatus === 'READY');
-  const completedOrders = orders.filter((o) => o.orderStatus === 'COMPLETED');
+  const completedOrders = useMemo(
+    () =>
+      orders
+        .filter((o) => o.orderStatus === 'COMPLETED')
+        .sort(
+          (a, b) =>
+            new Date(b.updatedAt || b.createdAt).getTime() -
+            new Date(a.updatedAt || a.createdAt).getTime(),
+        ),
+    [orders],
+  );
 
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4 items-start">
       <KdsOrderColumn
         title="New 🔔"
         accentColor="#FC9C34"
@@ -65,6 +76,7 @@ export function KdsOrderBoard({
         updatingOrderId={updatingOrderId}
         onVerifyAndBrew={onVerifyAndBrew}
         onTransitionStatus={onTransitionStatus}
+        pageSize={4}
       />
     </div>
   );

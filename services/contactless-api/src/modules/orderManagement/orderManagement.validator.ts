@@ -15,6 +15,7 @@ export const orderBusinessIdParamsSchema = z.object({
 
 export const liveOrdersQuerySchema = z.object({
   outletBusinessId: z.string().trim().min(1).max(50).optional(),
+  completedLimit: z.coerce.number().int().min(1).max(100).default(30).optional(),
 });
 
 export const orderHistoryQuerySchema = z.object({

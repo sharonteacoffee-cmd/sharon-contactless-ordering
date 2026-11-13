@@ -34,29 +34,64 @@ export interface PrivateOrderDbRow {
 
 export async function findLiveOrders(
   outletId: string | null,
+  completedLimit = 30,
 ): Promise<PrivateOrderDbRow[]> {
   const params: unknown[] = [];
-  const outletFilter = outletId ? `AND o.outlet_id = $1` : '';
+  let outletFilter = '';
   if (outletId) {
     params.push(outletId);
+    outletFilter = `AND o.outlet_id = $${params.length}`;
   }
+  params.push(completedLimit);
+  const limitIdx = params.length;
 
   const { rows } = await query<PrivateOrderDbRow>(
-    `SELECT o.id, o.business_id, o.payment_transaction_id, o.order_number,
-            o.outlet_id, out.business_id AS outlet_business_id, out.name AS outlet_name,
-            o.customer_name, o.customer_phone, o.table_or_token, o.items,
-            o.subtotal::text AS subtotal, o.tax::text AS tax, o.total_amount::text AS total_amount,
-            o.payment_provider, o.payment_method, o.payment_status, o.payment_reference,
-            o.order_status, o.notes, o.created_at, o.updated_at
-     FROM orders o
-     INNER JOIN outlets out ON out.id = o.outlet_id
-     WHERE (
-       o.order_status IN ('RECEIVED', 'PREPARING', 'READY')
-       OR (o.order_status = 'COMPLETED' AND o.updated_at >= NOW() - INTERVAL '4 hours')
+    `WITH active_orders AS (
+       SELECT o.id, o.business_id, o.payment_transaction_id, o.order_number,
+              o.outlet_id, out.business_id AS outlet_business_id, out.name AS outlet_name,
+              o.customer_name, o.customer_phone, o.table_or_token, o.items,
+              o.subtotal::text AS subtotal, o.tax::text AS tax, o.total_amount::text AS total_amount,
+              o.payment_provider, o.payment_method, o.payment_status, o.payment_reference,
+              o.order_status, o.notes, o.created_at, o.updated_at,
+              1 AS sort_group,
+              o.created_at AS sort_time
+       FROM orders o
+       INNER JOIN outlets out ON out.id = o.outlet_id
+       WHERE o.order_status IN ('RECEIVED', 'PREPARING', 'READY')
+         AND (o.payment_status <> 'PAYMENT_PENDING' OR o.order_status <> 'RECEIVED')
+         ${outletFilter}
+     ),
+     completed_orders AS (
+       SELECT o.id, o.business_id, o.payment_transaction_id, o.order_number,
+              o.outlet_id, out.business_id AS outlet_business_id, out.name AS outlet_name,
+              o.customer_name, o.customer_phone, o.table_or_token, o.items,
+              o.subtotal::text AS subtotal, o.tax::text AS tax, o.total_amount::text AS total_amount,
+              o.payment_provider, o.payment_method, o.payment_status, o.payment_reference,
+              o.order_status, o.notes, o.created_at, o.updated_at,
+              2 AS sort_group,
+              o.updated_at AS sort_time
+       FROM orders o
+       INNER JOIN outlets out ON out.id = o.outlet_id
+       WHERE o.order_status = 'COMPLETED'
+         AND o.updated_at >= NOW() - INTERVAL '4 hours'
+         ${outletFilter}
+       ORDER BY o.updated_at DESC
+       LIMIT $${limitIdx}
      )
-     AND (o.payment_status <> 'PAYMENT_PENDING' OR o.order_status <> 'RECEIVED')
-     ${outletFilter}
-     ORDER BY o.created_at ASC`,
+     SELECT id, business_id, payment_transaction_id, order_number,
+            outlet_id, outlet_business_id, outlet_name,
+            customer_name, customer_phone, table_or_token, items,
+            subtotal, tax, total_amount,
+            payment_provider, payment_method, payment_status, payment_reference,
+            order_status, notes, created_at, updated_at
+     FROM (
+       SELECT * FROM active_orders
+       UNION ALL
+       SELECT * FROM completed_orders
+     ) combined
+     ORDER BY sort_group ASC,
+              CASE WHEN sort_group = 1 THEN sort_time END ASC,
+              CASE WHEN sort_group = 2 THEN sort_time END DESC`,
     params,
   );
   return rows;

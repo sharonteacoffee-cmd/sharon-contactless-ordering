@@ -280,8 +280,10 @@ export function OrderHistoryPage() {
           pagination={{
             current: pagination?.page ?? page,
             pageSize: pagination?.limit ?? limit,
-            total: pagination?.total ?? orders.length,
+            total: pagination?.total ?? 0,
             showSizeChanger: true,
+            pageSizeOptions: ['10', '15', '20', '50', '100'],
+            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} orders`,
             onChange: (nextPage, nextSize) => {
               setPage(nextPage);
               setLimit(nextSize);

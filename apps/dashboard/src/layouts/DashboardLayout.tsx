@@ -155,17 +155,26 @@ export function DashboardLayout() {
   };
 
   return (
-    <Layout className="min-h-screen bg-brand-cream">
+    <Layout className="h-screen w-screen overflow-hidden bg-brand-cream flex flex-row">
       <Sider
         collapsible
         collapsed={sidebarCollapsed}
         onCollapse={setSidebarCollapsed}
         width={240}
         theme="dark"
-        style={{ backgroundColor: '#1C4C34' }}
+        className="h-screen sticky top-0 left-0 z-30 select-none shadow-md shrink-0 flex flex-col"
+        style={{
+          backgroundColor: '#1C4C34',
+          height: '100vh',
+          position: 'sticky',
+          top: 0,
+          left: 0,
+          overflowY: 'auto',
+          overflowX: 'hidden',
+        }}
         breakpoint="lg"
       >
-        <div className="flex h-16 items-center gap-3 border-b border-white/15 px-3.5">
+        <div className="flex h-16 items-center gap-3 border-b border-white/15 px-3.5 shrink-0">
           <SharonLogo size="sm" variant="badge" className="ring-2 ring-brand-amber/30 rounded-full" />
           {!sidebarCollapsed ? (
             <div className="overflow-hidden">
@@ -196,9 +205,9 @@ export function DashboardLayout() {
         />
       </Sider>
 
-      <Layout className="bg-brand-cream">
+      <Layout className="h-screen flex flex-col overflow-hidden bg-brand-cream min-w-0 flex-1">
         <Header
-          className="flex h-auto min-h-16 flex-wrap items-center justify-between gap-3 border-b border-brand-border bg-white/95 px-5 py-2.5"
+          className="shrink-0 z-20 flex h-auto min-h-16 flex-wrap items-center justify-between gap-3 border-b border-brand-border bg-white/95 px-5 py-2.5 shadow-xs"
           style={{ lineHeight: 'normal' }}
         >
           <div className="flex flex-wrap items-center gap-3">
@@ -303,7 +312,7 @@ export function DashboardLayout() {
           </Space>
         </Header>
 
-        <Content className="p-4 md:p-6">
+        <Content className="flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-6">
           <RouterOutlet />
         </Content>
       </Layout>

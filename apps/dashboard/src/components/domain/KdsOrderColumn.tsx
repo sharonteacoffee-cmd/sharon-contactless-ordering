@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Badge, Button, Card, Popconfirm, Tag } from 'antd';
+import { useEffect, useMemo, useState } from 'react';
+import { Badge, Button, Card, Pagination, Popconfirm, Tag } from 'antd';
 import {
   CheckCircle2,
   Clock,
@@ -52,6 +52,7 @@ interface KdsOrderColumnProps {
     orderBusinessId: string,
     nextStatus: OrderStatus,
   ) => void;
+  pageSize?: number;
 }
 
 export function KdsOrderColumn({
@@ -63,10 +64,29 @@ export function KdsOrderColumn({
   updatingOrderId,
   onVerifyAndBrew,
   onTransitionStatus,
+  pageSize = 0,
 }: KdsOrderColumnProps) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const isPaginated = pageSize > 0 && orders.length > pageSize;
+
+  useEffect(() => {
+    if (pageSize > 0) {
+      const maxPage = Math.max(1, Math.ceil(orders.length / pageSize));
+      if (currentPage > maxPage) {
+        setCurrentPage(1);
+      }
+    }
+  }, [orders.length, pageSize, currentPage]);
+
+  const displayedOrders = useMemo(() => {
+    if (!isPaginated) return orders;
+    const start = (currentPage - 1) * pageSize;
+    return orders.slice(start, start + pageSize);
+  }, [orders, isPaginated, currentPage, pageSize]);
+
   return (
-    <div className="flex h-full min-h-[540px] flex-col rounded-2xl border border-brand-border bg-white/85 p-3 shadow-soft">
-      <div className="mb-3 flex items-center justify-between border-b border-brand-border pb-2.5">
+    <div className="flex h-full min-h-[540px] max-h-[calc(100vh-210px)] flex-col rounded-2xl border border-brand-border bg-white/85 p-3 shadow-soft">
+      <div className="mb-3 flex items-center justify-between border-b border-brand-border pb-2.5 shrink-0">
         <div className="flex items-center gap-2">
           <span
             className="h-3 w-3 rounded-full"
@@ -83,11 +103,11 @@ export function KdsOrderColumn({
         />
       </div>
 
-      <div className="flex flex-1 flex-col gap-3 overflow-y-auto pr-0.5">
+      <div className="flex flex-1 flex-col gap-3 overflow-y-auto pr-1">
         {orders.length === 0 ? (
           <EmptyState title={emptyText} />
         ) : (
-          orders.map((order) => {
+          displayedOrders.map((order) => {
             const isUpiClaimed = order.paymentStatus === 'UPI_CLAIMED_DEMO';
             const isPending = order.paymentStatus === 'PAYMENT_PENDING';
             const isVerifying = verifyingOrderId === order.orderBusinessId;
@@ -268,6 +288,22 @@ export function KdsOrderColumn({
           })
         )}
       </div>
+
+      {isPaginated ? (
+        <div className="mt-2.5 pt-2 border-t border-brand-border flex items-center justify-between gap-1 px-1 shrink-0 bg-white/50 rounded-lg">
+          <span className="text-[11px] font-semibold text-brand-muted">
+            {(currentPage - 1) * pageSize + 1}–{Math.min(currentPage * pageSize, orders.length)} of {orders.length}
+          </span>
+          <Pagination
+            size="small"
+            simple
+            current={currentPage}
+            pageSize={pageSize}
+            total={orders.length}
+            onChange={(p) => setCurrentPage(p)}
+          />
+        </div>
+      ) : null}
     </div>
   );
 }

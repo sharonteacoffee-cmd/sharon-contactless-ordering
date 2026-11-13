@@ -27,7 +27,11 @@ export async function handleGetLiveOrders(
       typeof req.query.outletBusinessId === 'string'
         ? req.query.outletBusinessId
         : undefined;
-    const orders = await getLiveOrders(req.user, outletBusinessId);
+    const completedLimit =
+      typeof req.query.completedLimit === 'number'
+        ? req.query.completedLimit
+        : undefined;
+    const orders = await getLiveOrders(req.user, outletBusinessId, completedLimit);
     sendSuccess(res, 200, 'Live orders fetched successfully', orders);
   } catch (err) {
     next(err);
