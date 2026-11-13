@@ -20,7 +20,6 @@ describe('Payment Strategies & State Machine Guards', () => {
 
     expect(payload.upiUri).toContain('pa=paytm.s211ne7%40pty');
     expect(payload.upiUri).toContain('pn=MUNISWAMY%20JOSHVA');
-    expect(payload.upiUri).toContain('tr=ORD2611120001');
     expect(payload.upiUri).toContain('tn=Sharon%20Order%20SH-IND-101');
     expect(payload.upiUri).toContain('am=60.00');
     expect(payload.amountFormatted).toBe('60.00');

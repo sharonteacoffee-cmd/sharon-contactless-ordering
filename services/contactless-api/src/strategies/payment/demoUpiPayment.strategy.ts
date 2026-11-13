@@ -17,10 +17,10 @@ export function buildDynamicUpiPayload(input: {
   const cleanOrderNumber = input.orderNumber.replace(/^#/, '');
   const note = `Sharon Order ${cleanOrderNumber}`;
 
+  // Clean P2P UPI URI without 'tr' to prevent bank risk engines (like SBI / GPay) from flagging missing merchant aggregator signatures
   const upiUri =
     `upi://pay?pa=${encodeURIComponent(input.upiVpa)}` +
     `&pn=${encodeURIComponent(input.upiPayeeName)}` +
-    `&tr=${encodeURIComponent(input.orderBusinessId)}` +
     `&tn=${encodeURIComponent(note)}` +
     `&am=${encodeURIComponent(amountFormatted)}` +
     `&cu=INR`;
