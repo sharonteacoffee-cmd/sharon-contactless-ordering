@@ -30,8 +30,25 @@ export const API_ENDPOINTS = {
   },
   OUTLET: {
     GET_OUTLETS: '/Private/Outlet/GetOutlets',
+    CREATE_OUTLET: '/Private/Outlet/CreateOutlet',
+    UPDATE_OUTLET: (outletBusinessId: string) =>
+      `/Private/Outlet/UpdateOutlet/${encodeURIComponent(outletBusinessId)}`,
     UPDATE_OUTLET_SETTINGS: (outletBusinessId: string) =>
       `/Private/Outlet/UpdateOutletSettings/${encodeURIComponent(outletBusinessId)}`,
+    DELETE_OUTLET: (outletBusinessId: string) =>
+      `/Private/Outlet/DeleteOutlet/${encodeURIComponent(outletBusinessId)}`,
+  },
+  PRODUCT: {
+    GET_CATEGORIES: '/Private/Product/GetCategories',
+    GET_PRODUCTS: '/Private/Product/GetProducts',
+    CREATE_PRODUCT: '/Private/Product/CreateProduct',
+    UPDATE_PRODUCT: (productId: string) =>
+      `/Private/Product/UpdateProduct/${encodeURIComponent(productId)}`,
+    DELETE_PRODUCT: (productId: string) =>
+      `/Private/Product/DeleteProduct/${encodeURIComponent(productId)}`,
+  },
+  UPLOAD: {
+    IMAGE: '/Private/Upload/Image',
   },
   USER: {
     GET_USERS: '/Private/User/GetUsers',

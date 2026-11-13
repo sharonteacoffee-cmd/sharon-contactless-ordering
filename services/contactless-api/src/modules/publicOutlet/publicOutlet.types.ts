@@ -7,6 +7,7 @@ export interface OutletDbRow {
   slug: string;
   address: string;
   phone: string;
+  image_url?: string | null;
   operating_hours: string;
   is_active: boolean;
   is_ordering_enabled: boolean;

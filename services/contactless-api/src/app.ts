@@ -16,12 +16,14 @@ import {
 import { orderManagementRouter } from './modules/orderManagement/orderManagement.routes';
 import { outletRouter } from './modules/outlet/outlet.routes';
 import { outletStockRouter } from './modules/outletStock/outletStock.routes';
+import { productRouter } from './modules/product/product.routes';
 import { publicAuthRouter } from './modules/publicAuth/publicAuth.routes';
 import { publicCustomerRouter } from './modules/publicCustomer/publicCustomer.routes';
 import { publicMenuRouter } from './modules/publicMenu/publicMenu.routes';
 import { publicOrderRouter } from './modules/publicOrder/publicOrder.routes';
 import { publicOutletRouter } from './modules/publicOutlet/publicOutlet.routes';
 import { qrMasterRouter } from './modules/qrMaster/qrMaster.routes';
+import { uploadRouter } from './modules/upload/upload.routes';
 import { userManagementRouter } from './modules/userManagement/userManagement.routes';
 import { webhookRouter } from './modules/webhook/webhook.routes';
 import './types/auth.types';
@@ -114,6 +116,8 @@ export function createApp(): Express {
   app.use('/api/v1/Private/Order', orderManagementRouter);
   app.use('/api/v1/Private/QrMaster', qrMasterRouter);
   app.use('/api/v1/Private/Outlet', outletRouter);
+  app.use('/api/v1/Private/Product', productRouter);
+  app.use('/api/v1/Private/Upload', uploadRouter);
   app.use('/api/v1/Private/User', userManagementRouter);
   app.use('/api/v1/Private/Notification', notificationPrivateRouter);
 

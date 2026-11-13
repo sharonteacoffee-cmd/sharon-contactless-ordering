@@ -47,6 +47,9 @@ export type {
   PushTargetRole,
   RegisterPushTokenResult,
   PushNotificationStatus,
+  UploadResult,
+  MasterMenuItemRecord,
+  MenuCategoryRecord,
 } from './types/contactless';
 
 export {
@@ -68,6 +71,10 @@ export {
   generateQrSchema,
   updateQrStatusSchema,
   updateOutletSettingsSchema,
+  createOutletSchema,
+  updateOutletFullSchema,
+  createProductSchema,
+  updateProductSchema,
   createUserSchema,
   updateUserSchema,
   toggleUserStatusSchema,
@@ -95,6 +102,10 @@ export type {
   GenerateQrInput,
   UpdateQrStatusInput,
   UpdateOutletSettingsInput,
+  CreateOutletInput,
+  UpdateOutletFullInput,
+  CreateProductInput,
+  UpdateProductInput,
   CreateUserInput,
   UpdateUserInput,
   ToggleUserStatusInput,

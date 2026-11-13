@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS outlets (
     slug VARCHAR(255) UNIQUE NOT NULL,
     address TEXT NOT NULL,
     phone VARCHAR(50) NOT NULL,
+    image_url TEXT,
     operating_hours VARCHAR(255) NOT NULL DEFAULT '6:00 AM - 11:00 PM',
     is_active BOOLEAN NOT NULL DEFAULT true,
     is_ordering_enabled BOOLEAN NOT NULL DEFAULT true,
@@ -218,3 +219,4 @@ ALTER TABLE orders ADD COLUMN IF NOT EXISTS payment_transaction_id VARCHAR(50);
 ALTER TABLE orders ADD COLUMN IF NOT EXISTS payment_provider VARCHAR(50) NOT NULL DEFAULT 'DEMO_UPI_INTENT';
 ALTER TABLE orders ADD COLUMN IF NOT EXISTS customer_id UUID REFERENCES customers(id) ON DELETE SET NULL;
 CREATE INDEX IF NOT EXISTS idx_orders_customer_id ON orders(customer_id, created_at DESC);
+ALTER TABLE outlets ADD COLUMN IF NOT EXISTS image_url TEXT;

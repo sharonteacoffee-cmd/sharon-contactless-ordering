@@ -1,5 +1,7 @@
 import type {
   ApiSuccessEnvelope,
+  CreateOutletInput,
+  UpdateOutletFullInput,
   UpdateOutletSettingsInput,
 } from '@sharon/shared';
 import { axiosClient } from '../api/axiosClient';
@@ -18,6 +20,27 @@ export async function getOutlets(): Promise<OutletConfig[]> {
   return payload.outlets ?? [];
 }
 
+export async function createOutlet(
+  payload: CreateOutletInput,
+): Promise<OutletConfig> {
+  const { data } = await axiosClient.post<ApiSuccessEnvelope<OutletConfig>>(
+    API_ENDPOINTS.OUTLET.CREATE_OUTLET,
+    payload,
+  );
+  return data.data;
+}
+
+export async function updateOutlet(
+  outletBusinessId: string,
+  payload: UpdateOutletFullInput,
+): Promise<OutletConfig> {
+  const { data } = await axiosClient.put<ApiSuccessEnvelope<OutletConfig>>(
+    API_ENDPOINTS.OUTLET.UPDATE_OUTLET(outletBusinessId),
+    payload,
+  );
+  return data.data;
+}
+
 export async function updateOutletSettings(
   outletBusinessId: string,
   payload: UpdateOutletSettingsInput,
@@ -26,5 +49,14 @@ export async function updateOutletSettings(
     API_ENDPOINTS.OUTLET.UPDATE_OUTLET_SETTINGS(outletBusinessId),
     payload,
   );
+  return data.data;
+}
+
+export async function deleteOutlet(
+  outletBusinessId: string,
+): Promise<{ businessId: string; deleted: boolean; deactivated: boolean }> {
+  const { data } = await axiosClient.delete<
+    ApiSuccessEnvelope<{ businessId: string; deleted: boolean; deactivated: boolean }>
+  >(API_ENDPOINTS.OUTLET.DELETE_OUTLET(outletBusinessId));
   return data.data;
 }

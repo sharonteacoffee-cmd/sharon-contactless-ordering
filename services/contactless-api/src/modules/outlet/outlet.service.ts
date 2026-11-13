@@ -1,14 +1,19 @@
 import {
   toUTCISOString,
+  type CreateOutletInput,
   type CustomerAuthMode,
   type PaymentProvider,
+  type UpdateOutletFullInput,
   type UpdateOutletSettingsInput,
 } from '@sharon/shared';
 import { AppError } from '../../utils/appError';
 import type { OutletDbRow } from '../publicOutlet/publicOutlet.types';
 import {
+  deleteOrDeactivateOutletRow,
   findAllOutletsForAdmin,
-  updateOutletSettingsRow,
+  findOutletByBusinessId,
+  insertOutletWithTransaction,
+  updateOutletFullRow,
 } from './outlet.repository';
 
 export interface PrivateOutletDto {
@@ -18,6 +23,7 @@ export interface PrivateOutletDto {
   slug: string;
   address: string;
   phone: string;
+  imageUrl: string | null;
   operatingHours: string;
   isActive: boolean;
   isOrderingEnabled: boolean;
@@ -41,6 +47,7 @@ function toPrivateOutletDto(row: OutletDbRow): PrivateOutletDto {
     slug: row.slug,
     address: row.address,
     phone: row.phone,
+    imageUrl: row.image_url ?? null,
     operatingHours: row.operating_hours,
     isActive: row.is_active,
     isOrderingEnabled: row.is_ordering_enabled,
@@ -62,13 +69,46 @@ export async function getOutlets(): Promise<PrivateOutletDto[]> {
   return rows.map(toPrivateOutletDto);
 }
 
+export async function createOutlet(
+  input: CreateOutletInput,
+): Promise<PrivateOutletDto> {
+  const row = await insertOutletWithTransaction(input);
+  return toPrivateOutletDto(row);
+}
+
+export async function updateOutlet(
+  outletBusinessId: string,
+  input: UpdateOutletFullInput,
+): Promise<PrivateOutletDto> {
+  const existing = await findOutletByBusinessId(outletBusinessId);
+  if (!existing) {
+    throw new AppError(404, 'OUTLET_NOT_FOUND', `Outlet ${outletBusinessId} not found`);
+  }
+  const updated = await updateOutletFullRow(outletBusinessId, input);
+  if (!updated) {
+    throw new AppError(500, 'UPDATE_FAILED', `Failed to update outlet ${outletBusinessId}`);
+  }
+  return toPrivateOutletDto(updated);
+}
+
 export async function updateOutletSettings(
   outletBusinessId: string,
   input: UpdateOutletSettingsInput,
 ): Promise<PrivateOutletDto> {
-  const updated = await updateOutletSettingsRow(outletBusinessId, input);
-  if (!updated) {
-    throw new AppError(404, 'OUTLET_NOT_FOUND', 'Outlet not found.');
+  return updateOutlet(outletBusinessId, input as UpdateOutletFullInput);
+}
+
+export async function deleteOutlet(
+  outletBusinessId: string,
+): Promise<{ businessId: string; deleted: boolean; deactivated: boolean }> {
+  const existing = await findOutletByBusinessId(outletBusinessId);
+  if (!existing) {
+    throw new AppError(404, 'OUTLET_NOT_FOUND', `Outlet ${outletBusinessId} not found`);
   }
-  return toPrivateOutletDto(updated);
+  const res = await deleteOrDeactivateOutletRow(outletBusinessId);
+  return {
+    businessId: outletBusinessId,
+    deleted: res.deleted,
+    deactivated: res.deactivated,
+  };
 }

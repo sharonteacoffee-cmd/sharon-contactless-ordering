@@ -1,5 +1,9 @@
 import { z } from 'zod';
-import { updateOutletSettingsSchema } from '@sharon/shared';
+import {
+  createOutletSchema,
+  updateOutletFullSchema,
+  updateOutletSettingsSchema,
+} from '@sharon/shared';
 
 export const outletBusinessIdParamsSchema = z.object({
   outletBusinessId: z
@@ -8,4 +12,4 @@ export const outletBusinessIdParamsSchema = z.object({
     .regex(/^OUT[A-Z0-9]+$/i, 'Invalid outlet business ID format'),
 });
 
-export { updateOutletSettingsSchema };
+export { createOutletSchema, updateOutletFullSchema, updateOutletSettingsSchema };

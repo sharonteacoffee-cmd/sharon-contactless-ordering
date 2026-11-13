@@ -109,9 +109,19 @@ export function DashboardLayout() {
             label: 'MD Overview',
           },
           {
-            key: '/md/menu-sync',
-            icon: <RefreshCw className="h-4 w-4" />,
-            label: 'Website Menu Sync',
+            key: '/md/products',
+            icon: <Coffee className="h-4 w-4" />,
+            label: 'Products & Menu',
+          },
+          {
+            key: '/md/outlets',
+            icon: <Store className="h-4 w-4" />,
+            label: 'Outlets Management',
+          },
+          {
+            key: '/md/users',
+            icon: <TeamOutlined />,
+            label: 'Outlet Users',
           },
           {
             key: '/md/qr-master',
@@ -119,14 +129,9 @@ export function DashboardLayout() {
             label: 'QR Standee Master',
           },
           {
-            key: '/md/outlets',
-            icon: <Store className="h-4 w-4" />,
-            label: 'Outlet Config',
-          },
-          {
-            key: '/md/users',
-            icon: <TeamOutlined />,
-            label: 'Outlet Users',
+            key: '/md/menu-sync',
+            icon: <RefreshCw className="h-4 w-4" />,
+            label: 'Website Menu Sync',
           },
         ]
       : []),

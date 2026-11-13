@@ -10,6 +10,7 @@ import { MdAnalyticsOverviewPage } from '../pages/MdAnalyticsOverviewPage';
 import { MenuSyncPage } from '../pages/MenuSyncPage';
 import { OrderHistoryPage } from '../pages/OrderHistoryPage';
 import { OutletConfigPage } from '../pages/OutletConfigPage';
+import { ProductsPage } from '../pages/ProductsPage';
 import { QrMasterPage } from '../pages/QrMasterPage';
 import { ServiceUnavailablePage } from '../pages/ServiceUnavailablePage';
 import { StaffLoginPage } from '../pages/StaffLoginPage';
@@ -65,6 +66,14 @@ export function AppRoutes() {
           element={
             <RoleRoute allowedRoles={['MD']}>
               <QrMasterPage />
+            </RoleRoute>
+          }
+        />
+        <Route
+          path="/md/products"
+          element={
+            <RoleRoute allowedRoles={['MD']}>
+              <ProductsPage />
             </RoleRoute>
           }
         />

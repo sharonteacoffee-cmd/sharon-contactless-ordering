@@ -114,6 +114,7 @@ export const updateOutletSettingsSchema = z.object({
   name: z.string().trim().min(1).max(255).optional(),
   address: z.string().trim().min(1).max(1000).optional(),
   phone: z.string().trim().min(5).max(50).optional(),
+  imageUrl: z.string().trim().nullable().optional(),
   operatingHours: z.string().trim().min(1).max(255).optional(),
   isActive: z.boolean().optional(),
   isOrderingEnabled: z.boolean().optional(),
@@ -126,6 +127,42 @@ export const updateOutletSettingsSchema = z.object({
   upiPayeeName: z.string().trim().min(1).max(255).optional(),
   estimatedPrepTimeMinutes: z.number().int().min(1).max(180).optional(),
 });
+
+export const createOutletSchema = z.object({
+  name: z.string().trim().min(2, 'Outlet name must be at least 2 characters').max(255),
+  slug: z.string().trim().min(2).max(100).regex(/^[a-z0-9-]+$/i, 'Slug must be alphanumeric with hyphens').optional(),
+  address: z.string().trim().min(5, 'Address is required').max(1000),
+  phone: z.string().trim().min(8, 'Phone number is required').max(50),
+  imageUrl: z.string().trim().nullable().optional(),
+  operatingHours: z.string().trim().min(3).max(255).default('6:00 AM - 11:00 PM'),
+  isActive: z.boolean().default(true),
+  isOrderingEnabled: z.boolean().default(true),
+  customerAuthMode: customerAuthModeSchema.default('DIRECT_GUEST'),
+  requireCustomerPhone: z.boolean().default(true),
+  requireCustomerName: z.boolean().default(true),
+  paymentProvider: paymentProviderSchema.default('DEMO_UPI_INTENT'),
+  demoAutoVerifyPayment: z.boolean().default(false),
+  upiVpa: z.string().trim().min(3).max(255).default('paytm.s211ne7@pty'),
+  upiPayeeName: z.string().trim().min(1).max(255).default('MUNISWAMY JOSHVA'),
+  estimatedPrepTimeMinutes: z.number().int().min(1).max(180).default(5),
+});
+
+export const updateOutletFullSchema = createOutletSchema.partial();
+
+export const createProductSchema = z.object({
+  name: z.string().trim().min(2, 'Product name must be at least 2 characters').max(255),
+  slug: z.string().trim().min(2).max(100).optional(),
+  categorySlug: z.string().trim().min(1, 'Category is required').max(255),
+  description: z.string().trim().max(1000).nullable().optional(),
+  price: z.number().positive('Price must be greater than 0').max(100000),
+  imageUrl: z.string().trim().nullable().optional(),
+  isVegetarian: z.boolean().default(true),
+  isBestseller: z.boolean().default(false),
+  sortOrder: z.number().int().min(0).default(0),
+  isActive: z.boolean().default(true),
+});
+
+export const updateProductSchema = createProductSchema.partial();
 
 export const staffRoleSchema = z.enum(['OUTLET_STAFF', 'MD']);
 
@@ -267,6 +304,10 @@ export type VerifyPaymentInput = z.infer<typeof verifyPaymentSchema>;
 export type GenerateQrInput = z.infer<typeof generateQrSchema>;
 export type UpdateQrStatusInput = z.infer<typeof updateQrStatusSchema>;
 export type UpdateOutletSettingsInput = z.infer<typeof updateOutletSettingsSchema>;
+export type CreateOutletInput = z.infer<typeof createOutletSchema>;
+export type UpdateOutletFullInput = z.infer<typeof updateOutletFullSchema>;
+export type CreateProductInput = z.infer<typeof createProductSchema>;
+export type UpdateProductInput = z.infer<typeof updateProductSchema>;
 export type CreateUserInput = z.infer<typeof createUserSchema>;
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;
 export type ToggleUserStatusInput = z.infer<typeof toggleUserStatusSchema>;

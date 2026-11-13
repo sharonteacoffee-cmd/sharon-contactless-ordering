@@ -25,6 +25,12 @@ export const dashboardQueryKeys = {
   outlets: {
     list: ['outlets', 'list'] as const,
   },
+  products: {
+    all: ['products'] as const,
+    list: (filters?: { categorySlug?: string; search?: string }) =>
+      ['products', 'list', filters] as const,
+    categories: ['products', 'categories'] as const,
+  },
   users: {
     list: ['users', 'list'] as const,
   },

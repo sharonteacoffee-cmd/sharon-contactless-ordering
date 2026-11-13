@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS outlets (
     slug VARCHAR(255) UNIQUE NOT NULL,
     address TEXT NOT NULL,
     phone VARCHAR(50) NOT NULL,
+    image_url TEXT,
     operating_hours VARCHAR(255) NOT NULL DEFAULT '6:00 AM - 11:00 PM',
     is_active BOOLEAN NOT NULL DEFAULT true,
     is_ordering_enabled BOOLEAN NOT NULL DEFAULT true,

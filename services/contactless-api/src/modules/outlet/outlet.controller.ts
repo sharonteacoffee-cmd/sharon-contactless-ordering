@@ -1,7 +1,17 @@
 import type { NextFunction, Request, Response } from 'express';
-import type { UpdateOutletSettingsInput } from '@sharon/shared';
+import type {
+  CreateOutletInput,
+  UpdateOutletFullInput,
+  UpdateOutletSettingsInput,
+} from '@sharon/shared';
 import { sendSuccess } from '../../utils/apiResponse';
-import { getOutlets, updateOutletSettings } from './outlet.service';
+import {
+  createOutlet,
+  deleteOutlet,
+  getOutlets,
+  updateOutlet,
+  updateOutletSettings,
+} from './outlet.service';
 
 export async function handleGetOutlets(
   _req: Request,
@@ -16,6 +26,34 @@ export async function handleGetOutlets(
   }
 }
 
+export async function handleCreateOutlet(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> {
+  try {
+    const body = req.body as CreateOutletInput;
+    const created = await createOutlet(body);
+    sendSuccess(res, 201, 'Outlet created successfully', created);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function handleUpdateOutlet(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> {
+  try {
+    const body = req.body as UpdateOutletFullInput;
+    const updated = await updateOutlet(req.params.outletBusinessId, body);
+    sendSuccess(res, 200, 'Outlet updated successfully', updated);
+  } catch (err) {
+    next(err);
+  }
+}
+
 export async function handleUpdateOutletSettings(
   req: Request,
   res: Response,
@@ -23,8 +61,31 @@ export async function handleUpdateOutletSettings(
 ): Promise<void> {
   try {
     const body = req.body as UpdateOutletSettingsInput;
-    const updated = await updateOutletSettings(req.params.outletBusinessId, body);
+    const updated = await updateOutletSettings(
+      req.params.outletBusinessId,
+      body,
+    );
     sendSuccess(res, 200, 'Outlet settings updated successfully', updated);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function handleDeleteOutlet(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> {
+  try {
+    const result = await deleteOutlet(req.params.outletBusinessId);
+    sendSuccess(
+      res,
+      200,
+      result.deleted
+        ? 'Outlet deleted successfully'
+        : 'Outlet deactivated successfully',
+      result,
+    );
   } catch (err) {
     next(err);
   }

@@ -36,6 +36,7 @@ export interface OutletConfig {
   slug: string;
   address: string;
   phone: string;
+  imageUrl?: string | null;
   operatingHours: string;
   isActive: boolean;
   isOrderingEnabled: boolean;

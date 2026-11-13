@@ -27,6 +27,7 @@ export interface OutletPublicInfo {
   name: string;
   slug: string;
   address: string;
+  imageUrl?: string | null;
   operatingHours: string;
   isOrderingEnabled: boolean;
   customerAuthMode: CustomerAuthMode;
@@ -359,4 +360,38 @@ export interface RegisterPushTokenResult {
 export interface PushNotificationStatus {
   fcmConfigured: boolean;
   activeDeviceCount: number;
+}
+
+export interface UploadResult {
+  url: string;
+  key?: string;
+  originalName?: string;
+  size?: number;
+  mimeType?: string;
+}
+
+export interface MasterMenuItemRecord {
+  id: string;
+  externalMainId: string | null;
+  categorySlug: string;
+  categoryName?: string;
+  name: string;
+  slug: string;
+  description: string | null;
+  price: number;
+  imageUrl: string | null;
+  isVegetarian: boolean;
+  isBestseller: boolean;
+  sortOrder: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface MenuCategoryRecord {
+  id: string;
+  name: string;
+  slug: string;
+  sortOrder: number;
+  isActive: boolean;
 }
