@@ -36,6 +36,30 @@ export async function findOutletByBusinessId(
   return rows[0] ?? null;
 }
 
+export async function findOutletByNameOrSlug(
+  name: string,
+  slug?: string | null,
+): Promise<OutletDbRow | null> {
+  const normalizedSlug = (slug || name)
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+  const { rows } = await query<OutletDbRow>(
+    `SELECT id, business_id, name, slug, address, phone, image_url, operating_hours,
+            is_active, is_ordering_enabled, customer_auth_mode,
+            require_customer_phone, require_customer_name,
+            payment_provider, demo_auto_verify_payment, upi_vpa, upi_payee_name,
+            estimated_prep_time_minutes, created_at, updated_at
+     FROM outlets
+     WHERE LOWER(TRIM(name)) = LOWER(TRIM($1)) OR slug = $2
+     LIMIT 1`,
+    [name.trim(), normalizedSlug],
+  );
+  return rows[0] ?? null;
+}
+
 export async function insertOutletWithTransaction(
   input: CreateOutletInput,
 ): Promise<OutletDbRow> {

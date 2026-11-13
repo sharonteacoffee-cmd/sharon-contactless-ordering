@@ -3,7 +3,6 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import {
   CheckCircle2,
   Clock,
-  Coffee,
   QrCode,
   Radio,
   ShieldCheck,
@@ -12,6 +11,7 @@ import {
 import { formatElapsedLabel } from '@sharon/shared';
 import { ApiClientError } from '@/api/axiosClient';
 import { EmptyState } from '@/components/common/EmptyState';
+import { SharonLogo } from '@/components/common/SharonLogo';
 import { IstClockBadge } from '@/components/common/IstClockBadge';
 import { LiveStatusStepper } from '@/components/domain/LiveStatusStepper';
 import { PushAlertsCard } from '@/components/domain/PushAlertsCard';
@@ -115,7 +115,7 @@ export function OrderLiveStatusPage() {
             to={order ? `/order/${order.outletSlug}` : '/'}
             className="inline-flex items-center gap-2 text-xs font-semibold text-brand-forest hover:underline"
           >
-            <Coffee className="w-4 h-4" />
+            <SharonLogo size="xs" variant="badge" className="rounded-full shadow-sm" />
             <span>{order ? `Back to ${order.outletName}` : 'All Outlets'}</span>
           </Link>
 

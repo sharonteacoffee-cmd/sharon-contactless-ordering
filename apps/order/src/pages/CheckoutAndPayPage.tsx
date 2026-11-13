@@ -3,7 +3,6 @@ import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft,
   CheckCircle2,
-  Coffee,
   CreditCard,
   Loader2,
   Minus,
@@ -15,6 +14,7 @@ import {
 import type { PublicMenuItem } from '@sharon/shared';
 import { ApiClientError, toApiClientError } from '@/api/axiosClient';
 import { EmptyState } from '@/components/common/EmptyState';
+import { SharonLogo } from '@/components/common/SharonLogo';
 import { CustomerVerificationDrawer } from '@/components/domain/CustomerVerificationDrawer';
 import { UpiIntentPaySheet } from '@/components/domain/UpiIntentPaySheet';
 import { UpsellTray } from '@/components/domain/UpsellTray';
@@ -220,7 +220,7 @@ export function CheckoutAndPayPage() {
           <EmptyState
             title="Your tray is empty"
             description="Add hot Irani Chai, South Indian Filter Coffee, or crispy snacks to begin."
-            icon={<Coffee className="w-6 h-6" />}
+            icon={<SharonLogo size="md" variant="badge" className="rounded-full shadow-sm" />}
             action={
               <Link
                 to={outletSlug ? `/order/${outletSlug}` : '/'}

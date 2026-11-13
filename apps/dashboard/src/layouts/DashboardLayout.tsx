@@ -29,6 +29,7 @@ import {
   UtensilsCrossed,
 } from 'lucide-react';
 import { IstClockBadge } from '../components/common/IstClockBadge';
+import { SharonLogo } from '../components/common/SharonLogo';
 import { useCurrentProfileQuery } from '../hooks/useAuthHooks';
 import { useDashboardSocket } from '../hooks/useDashboardSocket';
 import { useOutletsQuery } from '../hooks/useOutletHooks';
@@ -164,16 +165,14 @@ export function DashboardLayout() {
         style={{ backgroundColor: '#1C4C34' }}
         breakpoint="lg"
       >
-        <div className="flex h-16 items-center gap-3 border-b border-white/15 px-4">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-amber text-brand-black shadow-sm">
-            <Coffee className="h-5 w-5" />
-          </div>
+        <div className="flex h-16 items-center gap-3 border-b border-white/15 px-3.5">
+          <SharonLogo size="sm" variant="badge" className="ring-2 ring-brand-amber/30 rounded-full" />
           {!sidebarCollapsed ? (
             <div className="overflow-hidden">
-              <div className="truncate font-display text-sm font-bold text-white">
+              <div className="truncate font-display text-sm font-bold text-white tracking-wide">
                 Sharon Tea &amp; Coffee
               </div>
-              <div className="truncate text-[11px] font-medium text-brand-amber">
+              <div className="truncate text-[10px] font-semibold tracking-wider uppercase text-brand-amber">
                 {isMd ? 'MD Operations' : 'Outlet Counter KDS'}
               </div>
             </div>

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
   Alert,
@@ -67,6 +67,7 @@ export function ProductsPage() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] =
     useState<MasterMenuItemRecord | null>(null);
+  const isSubmittingAddRef = useRef(false);
 
   const addForm = useForm<ProductFormData>({
     defaultValues: {
@@ -124,6 +125,8 @@ export function ProductsPage() {
   };
 
   const onAddSubmit = async (values: ProductFormData) => {
+    if (isSubmittingAddRef.current) return;
+    isSubmittingAddRef.current = true;
     try {
       const payload: CreateProductPayload = {
         name: values.name,
@@ -148,6 +151,8 @@ export function ProductsPage() {
       message.error(
         extractApiErrorMessage(error, 'Failed to create product.'),
       );
+    } finally {
+      isSubmittingAddRef.current = false;
     }
   };
 
@@ -625,7 +630,8 @@ export function ProductsPage() {
             <Button
               type="primary"
               htmlType="submit"
-              loading={createMutation.isPending}
+              loading={createMutation.isPending || addForm.formState.isSubmitting}
+              disabled={createMutation.isPending || addForm.formState.isSubmitting}
               className="bg-brand-forest hover:bg-brand-forest/90"
             >
               Add Product

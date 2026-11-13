@@ -12,6 +12,7 @@ import {
   deleteOrDeactivateOutletRow,
   findAllOutletsForAdmin,
   findOutletByBusinessId,
+  findOutletByNameOrSlug,
   insertOutletWithTransaction,
   updateOutletFullRow,
 } from './outlet.repository';
@@ -72,6 +73,15 @@ export async function getOutlets(): Promise<PrivateOutletDto[]> {
 export async function createOutlet(
   input: CreateOutletInput,
 ): Promise<PrivateOutletDto> {
+  const trimmedName = input.name.trim();
+  const existing = await findOutletByNameOrSlug(trimmedName, input.slug);
+  if (existing) {
+    throw new AppError(
+      409,
+      'CONFLICT',
+      `An outlet with the name "${trimmedName}" or slug "${existing.slug}" already exists.`,
+    );
+  }
   const row = await insertOutletWithTransaction(input);
   return toPrivateOutletDto(row);
 }

@@ -2,8 +2,9 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Button, Card, Input, Typography } from 'antd';
-import { Coffee, Lock, Mail } from 'lucide-react';
+import { Lock, Mail } from 'lucide-react';
 import { staffLoginSchema, type StaffLoginInput } from '@sharon/shared';
+import { SharonLogo } from '../components/common/SharonLogo';
 import { useStaffLoginMutation } from '../hooks/useAuthHooks';
 import { useDashboardUiStore } from '../stores/useDashboardUiStore';
 import { extractApiErrorMessage } from '../utils/errorMessage';
@@ -54,8 +55,8 @@ export function StaffLoginPage() {
         styles={{ body: { padding: '36px 32px' } }}
       >
         <div className="mb-6 flex flex-col items-center text-center">
-          <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-forest text-white shadow-soft">
-            <Coffee className="h-7 w-7" />
+          <div className="mb-3">
+            <SharonLogo size="xl" variant="badge" className="shadow-elevated rounded-full ring-4 ring-brand-amber/20" />
           </div>
           <Title level={3} className="m-0 font-display text-brand-black">
             Sharon Tea &amp; Coffee

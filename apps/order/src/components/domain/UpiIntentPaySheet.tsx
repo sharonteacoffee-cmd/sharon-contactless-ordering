@@ -88,6 +88,12 @@ export function UpiIntentPaySheet({
   }
 
   const { upiUri, payeeName, amountFormatted } = order.upiPayload;
+  const rawParams = upiUri.includes('?') ? upiUri.split('?')[1] : '';
+
+  const gpayUri = `tez://upi/pay?${rawParams}`;
+  const phonepeUri = `phonepe://pay?${rawParams}`;
+  const paytmUri = `paytmmp://pay?${rawParams}`;
+  const genericUpiUri = upiUri;
 
   const handleCopyReference = async () => {
     try {
@@ -169,15 +175,65 @@ export function UpiIntentPaySheet({
           </button>
         </div>
 
-        {/* Primary Mobile UPI Intent CTA */}
-        <a
-          href={upiUri}
-          onClick={() => setHasLaunchedUpiApp(true)}
-          className="btn-amber-cta w-full py-3.5 px-5 rounded-full text-sm flex items-center justify-center gap-2 shadow-soft mb-4"
-        >
-          <span>Open UPI App (₹{amountFormatted})</span>
-          <ExternalLink className="w-4 h-4" />
-        </a>
+        {/* Direct 1-Tap UPI App Selector Grid */}
+        <div className="space-y-2 mb-4">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-brand-muted">
+            Tap your UPI App to Pay ₹{amountFormatted}
+          </p>
+
+          <div className="grid grid-cols-3 gap-2">
+            {/* Google Pay */}
+            <a
+              href={gpayUri}
+              onClick={() => setHasLaunchedUpiApp(true)}
+              className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white border border-brand-border hover:border-[#4285F4] hover:shadow-sm active:scale-95 transition-all text-center gap-1.5"
+            >
+              <div className="w-8 h-8 rounded-full bg-[#F8F9FA] flex items-center justify-center border border-gray-100 shadow-xs">
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 5c1.5 0 2.8.5 3.8 1.4l2.8-2.8C16.8 2 14.5 1.2 12 1.2 7.7 1.2 4 3.7 2.3 7.3l3.5 2.7C6.7 7.2 9.1 5 12 5z" fill="#EA4335"/>
+                  <path d="M22.8 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.1c-.3 1.4-1.1 2.6-2.3 3.4l3.5 2.7c2.1-1.9 3.5-4.8 3.5-8.3z" fill="#4285F4"/>
+                  <path d="M5.8 14c-.3-.8-.4-1.6-.4-2.5s.1-1.7.4-2.5L2.3 6.3C1.5 8 1 9.9 1 12s.5 4 1.3 5.7l3.5-2.7z" fill="#FBBC05"/>
+                  <path d="M12 22.8c3.2 0 6-1.1 8-3l-3.5-2.7c-1.1.7-2.5 1.2-4.5 1.2-2.9 0-5.3-2.2-6.2-5l-3.5 2.7C4 19.3 7.7 22.8 12 22.8z" fill="#34A853"/>
+                </svg>
+              </div>
+              <span className="text-xs font-bold text-gray-800">Google Pay</span>
+            </a>
+
+            {/* PhonePe */}
+            <a
+              href={phonepeUri}
+              onClick={() => setHasLaunchedUpiApp(true)}
+              className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white border border-brand-border hover:border-[#5f259f] hover:shadow-sm active:scale-95 transition-all text-center gap-1.5"
+            >
+              <div className="w-8 h-8 rounded-full bg-[#5f259f] flex items-center justify-center text-white font-bold text-sm shadow-xs">
+                पे
+              </div>
+              <span className="text-xs font-bold text-[#5f259f]">PhonePe</span>
+            </a>
+
+            {/* Paytm */}
+            <a
+              href={paytmUri}
+              onClick={() => setHasLaunchedUpiApp(true)}
+              className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white border border-brand-border hover:border-[#00b9f1] hover:shadow-sm active:scale-95 transition-all text-center gap-1.5"
+            >
+              <div className="w-8 h-8 rounded-full bg-[#002e6e] flex items-center justify-center text-white font-bold text-[9px] tracking-tighter shadow-xs">
+                <span className="text-[#00b9f1]">pay</span><span className="text-white">tm</span>
+              </div>
+              <span className="text-xs font-bold text-[#002e6e]">Paytm</span>
+            </a>
+          </div>
+
+          {/* Any UPI / Other Apps Button */}
+          <a
+            href={genericUpiUri}
+            onClick={() => setHasLaunchedUpiApp(true)}
+            className="btn-amber-cta w-full py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm font-semibold"
+          >
+            <span>Other UPI Apps (BHIM, CRED, Bank)</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+        </div>
 
         {/* Dynamic Scannable QR Card */}
         <div className="glass-light rounded-3xl p-4 flex flex-col items-center text-center gap-3 mb-4">

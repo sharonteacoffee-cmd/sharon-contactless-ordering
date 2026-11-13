@@ -1,9 +1,10 @@
 import { useEffect, useMemo } from 'react';
 import { Link, Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { ArrowRight, Coffee, Search, ShoppingBag, Sparkles, User, X } from 'lucide-react';
+import { ArrowRight, Search, ShoppingBag, Sparkles, User, X } from 'lucide-react';
 import type { PublicMenuItem, SelectedModifier } from '@sharon/shared';
 import { ApiClientError } from '@/api/axiosClient';
 import { EmptyState } from '@/components/common/EmptyState';
+import { SharonLogo } from '@/components/common/SharonLogo';
 import { ItemModifierModal } from '@/components/domain/ItemModifierModal';
 import { MenuCard } from '@/components/domain/MenuCard';
 import { useOutletStockSocket } from '@/hooks/useOutletStockSocket';
@@ -202,18 +203,20 @@ export function OutletMenuPage() {
   return (
     <CustomerLayout maxWidthClass="max-w-4xl">
       {/* Sticky Glass Top Bar */}
-      <header className="sticky top-0 z-30 px-3 sm:px-4 pt-3 pb-2">
-        <div className="glass-light rounded-3xl px-4 py-3 space-y-3">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3 min-w-0">
-              <div className="w-10 h-10 rounded-2xl bg-brand-forest text-white flex items-center justify-center shrink-0 shadow-primaryBtn">
-                <Coffee className="w-5 h-5" />
-              </div>
+      <header className="sticky top-0 z-30 px-2.5 sm:px-4 pt-2 sm:pt-3 pb-2">
+        <div className="glass-light rounded-2xl sm:rounded-3xl px-3 sm:px-4 py-2.5 sm:py-3 space-y-2.5 sm:space-y-3">
+          <div className="flex items-center justify-between gap-2.5 sm:gap-3">
+            <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+              <SharonLogo
+                size="sm"
+                variant="badge"
+                className="shadow-sm ring-2 ring-brand-forest/20 rounded-full shrink-0"
+              />
               <div className="min-w-0">
-                <h1 className="font-display text-base sm:text-lg font-bold text-brand-forest truncate">
+                <h1 className="font-display text-sm sm:text-lg font-bold text-brand-forest truncate">
                   {outletLoading ? 'Loading outlet...' : `Sharon — ${outlet?.name ?? ''}`}
                 </h1>
-                <p className="text-[11px] sm:text-xs text-brand-muted truncate">
+                <p className="text-[10px] sm:text-xs text-brand-muted truncate">
                   {outlet
                     ? `Open • ${outlet.operatingHours} • ~${outlet.estimatedPrepTimeMinutes} min brew`
                     : 'Freshly brewed chai & filter coffee'}
@@ -221,20 +224,20 @@ export function OutletMenuPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 shrink-0">
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
               <Link
                 to="/profile"
-                className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/90 border border-brand-border text-brand-forest text-[11px] font-semibold hover:bg-white transition-colors"
+                className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1 rounded-full bg-white/90 border border-brand-border text-brand-forest text-[10px] sm:text-[11px] font-semibold hover:bg-white transition-colors"
               >
                 <User className="w-3 h-3" />
-                <span className="max-w-[90px] truncate">
-                  {customerAccessToken && fullName ? fullName : 'Profile / Orders'}
+                <span className="max-w-[70px] sm:max-w-[90px] truncate">
+                  {customerAccessToken && fullName ? fullName : 'Profile'}
                 </span>
               </Link>
 
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#DCFCE7] border border-[#86EFAC] text-[#14532D] text-[11px] font-bold">
-                <span className="w-2 h-2 rounded-full bg-brand-leaf animate-pulse" />
-                <span className="max-w-[95px] truncate">{tableOrToken}</span>
+              <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 rounded-full bg-[#DCFCE7] border border-[#86EFAC] text-[#14532D] text-[10px] sm:text-[11px] font-bold">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-brand-leaf animate-pulse" />
+                <span className="max-w-[75px] sm:max-w-[95px] truncate">{tableOrToken}</span>
               </span>
             </div>
           </div>
@@ -296,13 +299,13 @@ export function OutletMenuPage() {
       </header>
 
       {/* Menu Grid */}
-      <main className="flex-1 px-3 sm:px-4 pt-3 pb-28">
+      <main className="flex-1 px-2.5 sm:px-4 pt-2 sm:pt-3 pb-36 sm:pb-32">
         {outletLoading || menuLoading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 sm:gap-4">
             {[1, 2, 3, 4, 5, 6].map((idx) => (
               <div
                 key={idx}
-                className="glass-light rounded-3xl p-3 h-72 animate-pulse bg-white/55"
+                className="glass-light rounded-2xl sm:rounded-3xl p-2.5 sm:p-3 h-64 sm:h-72 animate-pulse bg-white/55"
               />
             ))}
           </div>
@@ -340,7 +343,7 @@ export function OutletMenuPage() {
             }
           />
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 sm:gap-4">
             {filteredItems.map((item) => (
               <MenuCard
                 key={item.id}
@@ -356,25 +359,25 @@ export function OutletMenuPage() {
 
       {/* Dark Frosted Floating Bottom Order Tray Bar with Golden Amber CTA */}
       {totalItems > 0 && outletSlug ? (
-        <div className="fixed bottom-4 left-0 right-0 z-40 px-4 flex justify-center pointer-events-none">
+        <div className="fixed bottom-3 sm:bottom-5 left-0 right-0 z-40 px-3 sm:px-4 flex justify-center pointer-events-none mb-[env(safe-area-inset-bottom,0px)]">
           <button
             type="button"
             onClick={() => navigate(`/order/${outletSlug}/checkout`)}
-            className="pointer-events-auto w-full max-w-md glass-dark rounded-full px-4 py-2.5 flex items-center justify-between gap-3 hover:bg-brand-black transition-colors active:scale-[0.99]"
+            className="pointer-events-auto w-full max-w-md glass-dark rounded-full px-3.5 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between gap-2.5 sm:gap-3 hover:bg-brand-black transition-colors active:scale-[0.99] shadow-floating"
           >
-            <div className="flex items-center gap-3 pl-1">
-              <div className="w-9 h-9 rounded-full bg-brand-forest text-white flex items-center justify-center">
+            <div className="flex items-center gap-2.5 sm:gap-3 pl-1 min-w-0">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-brand-forest text-white flex items-center justify-center shrink-0">
                 <ShoppingBag className="w-4 h-4" />
               </div>
-              <div className="text-left">
-                <p className="text-xs font-bold text-white tabular-price">
+              <div className="text-left min-w-0">
+                <p className="text-xs font-bold text-white tabular-price truncate">
                   {totalItems} {totalItems === 1 ? 'Item' : 'Items'} • {formatINR(estimatedSubtotal)}
                 </p>
-                <p className="text-[11px] text-white/75">Tap to review pairings &amp; pay</p>
+                <p className="text-[10px] sm:text-[11px] text-white/75 truncate">Tap to review &amp; pay</p>
               </div>
             </div>
 
-            <span className="btn-amber-cta inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs">
+            <span className="btn-amber-cta inline-flex items-center gap-1 sm:gap-1.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs shrink-0">
               <span>View Order</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </span>

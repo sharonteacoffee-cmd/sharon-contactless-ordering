@@ -10,6 +10,7 @@ import {
   findAllCategories,
   findAllProducts,
   findProductById,
+  findProductByNameAndCategory,
   insertProductWithOutlets,
   updateProductWithOutlets,
   type ProductDbRow,
@@ -51,6 +52,15 @@ export async function getProducts(filters?: {
 export async function createProduct(
   input: CreateProductRequest,
 ): Promise<MasterMenuItemRecord> {
+  const existing = await findProductByNameAndCategory(input.name.trim(), input.categorySlug);
+  if (existing) {
+    throw new AppError(
+      409,
+      'CONFLICT',
+      `Product "${input.name.trim()}" already exists in category "${input.categorySlug}".`,
+    );
+  }
+
   const { product, configuredOutlets } = await insertProductWithOutlets(input);
   const record = toProductRecord(product);
 

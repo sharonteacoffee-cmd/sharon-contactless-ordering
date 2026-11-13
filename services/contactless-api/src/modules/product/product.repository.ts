@@ -93,6 +93,24 @@ export async function findProductById(productId: string): Promise<ProductDbRow |
   return rows[0] ?? null;
 }
 
+export async function findProductByNameAndCategory(
+  name: string,
+  categorySlug: string,
+): Promise<ProductDbRow | null> {
+  const { rows } = await query<ProductDbRow>(
+    `SELECT m.id, m.external_main_id, m.category_slug, c.name AS category_name,
+            m.name, m.slug, m.description, m.price, m.image_url,
+            m.is_vegetarian, m.is_bestseller, m.sort_order, m.is_active,
+            m.created_at, m.updated_at
+     FROM menu_items m
+     LEFT JOIN menu_categories c ON c.slug = m.category_slug
+     WHERE LOWER(TRIM(m.name)) = LOWER(TRIM($1)) AND m.category_slug = $2
+     LIMIT 1`,
+    [name.trim(), categorySlug],
+  );
+  return rows[0] ?? null;
+}
+
 export async function insertProductWithOutlets(
   input: CreateProductRequest,
 ): Promise<{ product: ProductDbRow; configuredOutlets: Array<{ id: string; slug: string }> }> {

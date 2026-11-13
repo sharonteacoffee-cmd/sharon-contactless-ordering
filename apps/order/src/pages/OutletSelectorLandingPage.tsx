@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
-import { Clock, Coffee, MapPin, PauseCircle, ArrowRight, Sparkles, User } from 'lucide-react';
+import { Clock, MapPin, PauseCircle, ArrowRight, Sparkles, User } from 'lucide-react';
 import { ApiClientError } from '@/api/axiosClient';
 import { EmptyState } from '@/components/common/EmptyState';
+import { SharonLogo } from '@/components/common/SharonLogo';
 import { usePublicOutletsQuery } from '@/hooks/usePublicOutletsQuery';
 import { CustomerLayout } from '@/layouts/CustomerLayout';
 import { useCustomerAuthStore } from '@/stores/useCustomerAuthStore';
@@ -31,8 +32,8 @@ export function OutletSelectorLandingPage() {
 
         {/* Hero Brand Header */}
         <header className="glass-light rounded-3xl p-6 text-center space-y-3">
-          <div className="mx-auto w-14 h-14 rounded-2xl bg-brand-forest text-white flex items-center justify-center shadow-primaryBtn">
-            <Coffee className="w-7 h-7" />
+          <div className="mx-auto flex justify-center">
+            <SharonLogo size="xl" variant="badge" className="rounded-full shadow-elevated ring-4 ring-brand-amber/20" />
           </div>
 
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-burgundy/10 text-brand-burgundy text-xs font-semibold">

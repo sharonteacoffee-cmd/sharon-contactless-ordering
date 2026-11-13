@@ -5,7 +5,6 @@ import {
   ArrowLeft,
   ArrowRight,
   CheckCircle2,
-  Coffee,
   KeyRound,
   Loader2,
   LogOut,
@@ -27,6 +26,7 @@ import {
 import { toApiClientError } from '@/api/axiosClient';
 import { queryKeys } from '@/api/queryKeys';
 import { EmptyState } from '@/components/common/EmptyState';
+import { SharonLogo } from '@/components/common/SharonLogo';
 import { PushAlertsCard } from '@/components/domain/PushAlertsCard';
 import {
   useCustomerLookupQuery,
@@ -586,7 +586,7 @@ export function CustomerProfilePage() {
                 <EmptyState
                   title="No orders yet"
                   description="Once you place your first chai or coffee order, it will appear here with live tracking."
-                  icon={<Coffee className="w-6 h-6" />}
+                  icon={<SharonLogo size="md" variant="badge" className="rounded-full shadow-sm" />}
                   action={
                     <Link
                       to="/"

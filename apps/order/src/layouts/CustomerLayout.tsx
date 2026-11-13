@@ -18,7 +18,9 @@ export function CustomerLayout({
         <div className="absolute -bottom-28 right-1/4 w-96 h-96 rounded-full bg-brand-burgundy/6 blur-3xl" />
       </div>
 
-      <div className={`relative z-10 mx-auto w-full ${maxWidthClass} min-h-screen flex flex-col`}>
+      <div
+        className={`relative z-10 mx-auto w-full ${maxWidthClass} min-h-screen flex flex-col pb-[calc(env(safe-area-inset-bottom,0px)+4rem)]`}
+      >
         {children}
       </div>
     </div>

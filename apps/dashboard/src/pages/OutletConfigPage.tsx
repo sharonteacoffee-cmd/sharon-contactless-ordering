@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -51,6 +51,7 @@ export function OutletConfigPage() {
   const [editingOutlet, setEditingOutlet] = useState<OutletConfig | null>(null);
   const [configuringOutlet, setConfiguringOutlet] =
     useState<OutletConfig | null>(null);
+  const isSubmittingAddRef = useRef(false);
 
   // Add Outlet Form
   const addForm = useForm<CreateOutletInput>({
@@ -150,6 +151,8 @@ export function OutletConfigPage() {
   };
 
   const onAddSubmit = async (values: CreateOutletInput) => {
+    if (isSubmittingAddRef.current) return;
+    isSubmittingAddRef.current = true;
     try {
       const created = await createMutation.mutateAsync(values);
       message.success(`Outlet "${created.name}" created successfully!`);
@@ -159,6 +162,8 @@ export function OutletConfigPage() {
       message.error(
         extractApiErrorMessage(error, 'Failed to create outlet.'),
       );
+    } finally {
+      isSubmittingAddRef.current = false;
     }
   };
 
@@ -606,7 +611,8 @@ export function OutletConfigPage() {
             <Button
               type="primary"
               htmlType="submit"
-              loading={createMutation.isPending}
+              loading={createMutation.isPending || addForm.formState.isSubmitting}
+              disabled={createMutation.isPending || addForm.formState.isSubmitting}
               className="bg-brand-forest hover:bg-brand-forest/90"
             >
               Create Outlet
