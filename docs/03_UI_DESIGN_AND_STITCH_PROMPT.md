@@ -73,4 +73,7 @@ SCREENS TO GENERATE:
    - Hero frosted Token Pass Card: `#SH-IND-101`, "₹50.00 Paid via UPI", Reference Note `Order SH-IND-101`, badge "Show at Counter / Verifying".
    - Vertical real-time progress stepper: Received → Brewing (amber steam glow) → Ready for Pickup (emerald celebration glow) → Delivered.
    - Live IST timestamp (`12:05 PM IST`) & live elapsed seconds counter (`Ordered 45s ago`).
+
+6. GLOBAL FOOTER & DEVELOPER CREDITS (ALL APPS):
+   - App Footer Bar: "© 2026 Sharon Tea & Coffee. All rights reserved. • Designed and Developed by Novacodex (https://novacodex.in)" with subtle amber/gold link hover.
 ```
