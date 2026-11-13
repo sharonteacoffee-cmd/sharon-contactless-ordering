@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import {
+  ArrowLeft,
   CheckCircle2,
   Clock,
   QrCode,
@@ -109,17 +110,18 @@ export function OrderLiveStatusPage() {
   return (
     <CustomerLayout maxWidthClass="max-w-xl">
       <div className="px-3 sm:px-4 py-5 space-y-4 flex-1">
-        {/* Top Connection Status Bar */}
-        <div className="flex items-center justify-between gap-2 px-1">
+        {/* Top Navigation & Status Bar */}
+        <div className="flex items-center justify-between gap-2 px-0.5">
           <Link
             to={order ? `/order/${order.outletSlug}` : '/'}
-            className="inline-flex items-center gap-2 text-xs font-semibold text-brand-forest hover:underline"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-brand-border text-xs font-bold text-brand-forest hover:bg-brand-cream shadow-soft transition-all active:scale-95"
           >
-            <SharonLogo size="xs" variant="badge" className="rounded-full shadow-sm" />
-            <span>{order ? `Back to ${order.outletName}` : 'All Outlets'}</span>
+            <ArrowLeft className="w-4 h-4 text-brand-forest" />
+            <SharonLogo size="xs" variant="badge" className="rounded-full shadow-xs" />
+            <span>Back to Menu</span>
           </Link>
 
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/80 border border-brand-border text-[11px] font-semibold text-brand-muted">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 border border-brand-border text-[11px] font-semibold text-brand-muted shadow-soft">
             <Radio
               className={`w-3 h-3 ${isConnected ? 'text-brand-leaf animate-pulse' : 'text-brand-amber'}`}
             />
@@ -206,6 +208,16 @@ export function OrderLiveStatusPage() {
                     Ordered {elapsedLabel}
                   </span>
                 ) : null}
+              </div>
+
+              <div className="pt-2 border-t border-brand-border/60">
+                <Link
+                  to={order ? `/order/${order.outletSlug}` : '/'}
+                  className="btn-cream-secondary w-full py-2.5 px-4 rounded-full text-xs font-semibold inline-flex items-center justify-center gap-1.5 transition-all active:scale-95"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>Order More Drinks • Back to Menu</span>
+                </Link>
               </div>
             </section>
 
