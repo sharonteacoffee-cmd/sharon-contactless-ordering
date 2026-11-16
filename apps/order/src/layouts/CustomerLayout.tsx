@@ -21,7 +21,31 @@ export function CustomerLayout({
       <div
         className={`relative z-10 mx-auto w-full ${maxWidthClass} min-h-screen flex flex-col pb-[calc(env(safe-area-inset-bottom,0px)+4rem)]`}
       >
-        {children}
+        <div className="flex-1 flex flex-col">{children}</div>
+
+        {/* Official Merchant Legal & Contact Information (Cashfree Compliance) */}
+        <footer className="mt-8 pt-6 pb-6 px-4 border-t border-brand-border/60 text-center space-y-2">
+          <div className="inline-block px-3 py-1 rounded-full bg-brand-forest/10 text-brand-forest text-xs font-bold uppercase tracking-wider">
+            Legal Entity &bull; SHARON TEA STALL
+          </div>
+          <p className="text-xs text-brand-black font-semibold">
+            Legal Trade Name: <span className="font-bold">SHARON TEA STALL</span>
+          </p>
+          <p className="text-[11px] text-brand-muted">
+            Operating as Sharon Tea &amp; Coffee &bull; Authentic Chai, Filter Coffee &amp; Snacks
+          </p>
+          <div className="text-[11px] text-brand-muted flex items-center justify-center gap-3 flex-wrap pt-1">
+            <span>Customer Support: <strong className="text-brand-black">+91 93808 35651</strong></span>
+            <span>&bull;</span>
+            <span>Email: <strong className="text-brand-black">sharonteacoffee@gmail.com</strong></span>
+          </div>
+          <p className="text-[11px] text-brand-muted">
+            Registered Address: #34, 2nd Main Road, 1st Stage, Indiranagar, Bangalore - 560038
+          </p>
+          <p className="text-[10px] text-brand-muted/70 pt-2">
+            &copy; {new Date().getFullYear()} SHARON TEA STALL. All rights reserved. &bull; Contactless Multi-Outlet Ordering
+          </p>
+        </footer>
       </div>
     </div>
   );

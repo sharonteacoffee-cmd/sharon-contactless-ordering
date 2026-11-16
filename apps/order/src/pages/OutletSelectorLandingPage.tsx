@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Clock, MapPin, PauseCircle, ArrowRight, Sparkles, User } from 'lucide-react';
+import { Clock, MapPin, PauseCircle, ArrowRight, Sparkles, User, Phone, Mail, Building2 } from 'lucide-react';
 import { ApiClientError } from '@/api/axiosClient';
 import { EmptyState } from '@/components/common/EmptyState';
 import { SharonLogo } from '@/components/common/SharonLogo';
@@ -162,6 +162,54 @@ export function OutletSelectorLandingPage() {
             </div>
           </section>
         ) : null}
+
+        {/* Contact Us & Merchant Compliance Section */}
+        <section className="glass-light rounded-3xl p-5 space-y-3 border border-brand-border/80">
+          <div className="flex items-center gap-2">
+            <Building2 className="w-4 h-4 text-brand-forest" />
+            <h2 className="font-display text-base font-bold text-brand-black">
+              Contact Us &amp; Legal Trade Details
+            </h2>
+          </div>
+
+          <div className="bg-white/80 rounded-2xl p-4 border border-brand-border/60 space-y-2 text-xs">
+            <div className="flex items-start justify-between gap-2 pb-2 border-b border-brand-border/40">
+              <span className="text-brand-muted font-medium">Legal Trade Name:</span>
+              <strong className="text-brand-black font-bold uppercase">SHARON TEA STALL</strong>
+            </div>
+            <div className="flex items-start justify-between gap-2 pb-2 border-b border-brand-border/40">
+              <span className="text-brand-muted font-medium">Brand Operating As:</span>
+              <span className="text-brand-black font-semibold">Sharon Tea &amp; Coffee</span>
+            </div>
+            <div className="flex items-center justify-between gap-2 pb-2 border-b border-brand-border/40">
+              <span className="text-brand-muted font-medium flex items-center gap-1.5">
+                <Phone className="w-3.5 h-3.5 text-brand-forest" />
+                Customer Support:
+              </span>
+              <a href="tel:+919380835651" className="text-brand-forest font-bold hover:underline">
+                +91 93808 35651
+              </a>
+            </div>
+            <div className="flex items-center justify-between gap-2 pb-2 border-b border-brand-border/40">
+              <span className="text-brand-muted font-medium flex items-center gap-1.5">
+                <Mail className="w-3.5 h-3.5 text-brand-forest" />
+                Official Email:
+              </span>
+              <a href="mailto:sharonteacoffee@gmail.com" className="text-brand-forest font-semibold hover:underline">
+                sharonteacoffee@gmail.com
+              </a>
+            </div>
+            <div className="flex items-start justify-between gap-2 pt-1">
+              <span className="text-brand-muted font-medium flex items-start gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-brand-forest shrink-0 mt-0.5" />
+                Registered Address:
+              </span>
+              <span className="text-brand-black text-right max-w-xs">
+                #34, 2nd Main Road, 1st Stage, Indiranagar, Bangalore - 560038, Karnataka
+              </span>
+            </div>
+          </div>
+        </section>
       </div>
     </CustomerLayout>
   );
