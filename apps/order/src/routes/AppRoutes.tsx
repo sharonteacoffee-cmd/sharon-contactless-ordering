@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { CheckoutAndPayPage } from '@/pages/CheckoutAndPayPage';
 import { CustomerProfilePage } from '@/pages/CustomerProfilePage';
+import { LegalDetailsPage } from '@/pages/LegalDetailsPage';
 import { MaintenancePage } from '@/pages/MaintenancePage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { OrderLiveStatusPage } from '@/pages/OrderLiveStatusPage';
@@ -19,6 +20,10 @@ export function AppRoutes() {
       <Route path="/order/status/:orderBusinessId" element={<OrderLiveStatusPage />} />
       <Route path="/track/:orderBusinessId" element={<OrderLiveStatusPage />} />
       <Route path="/outlet-paused" element={<OutletOrderingPausedPage />} />
+      <Route path="/legal" element={<LegalDetailsPage />} />
+      <Route path="/contact" element={<LegalDetailsPage />} />
+      <Route path="/terms" element={<LegalDetailsPage />} />
+      <Route path="/refunds" element={<LegalDetailsPage />} />
       <Route path="/maintenance" element={<MaintenancePage />} />
       <Route path="/500" element={<ServerErrorPage />} />
       <Route path="/404" element={<NotFoundPage />} />

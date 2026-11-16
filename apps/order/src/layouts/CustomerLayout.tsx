@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 
 interface CustomerLayoutProps {
   children: ReactNode;
@@ -42,6 +43,18 @@ export function CustomerLayout({
           <p className="text-[11px] text-brand-muted">
             Registered Address: #34, 2nd Main Road, 1st Stage, Indiranagar, Bangalore - 560038
           </p>
+
+          {/* Consumer Compliance Policy Links */}
+          <div className="flex items-center justify-center gap-3 text-[11px] text-brand-forest pt-2 font-semibold flex-wrap">
+            <Link to="/legal" className="hover:underline">Legal &amp; Business Info</Link>
+            <span>&bull;</span>
+            <Link to="/terms" className="hover:underline">Terms of Service</Link>
+            <span>&bull;</span>
+            <Link to="/refunds" className="hover:underline">Refund &amp; Cancellation</Link>
+            <span>&bull;</span>
+            <Link to="/contact" className="hover:underline">Contact Us</Link>
+          </div>
+
           <p className="text-[10px] text-brand-muted/70 pt-2">
             &copy; {new Date().getFullYear()} SHARON TEA STALL. All rights reserved. &bull; Contactless Multi-Outlet Ordering
           </p>
